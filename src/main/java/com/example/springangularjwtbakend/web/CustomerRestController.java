@@ -5,6 +5,7 @@ import com.example.springangularjwtbakend.exceptions.CustomerNotFoundException;
 import com.example.springangularjwtbakend.services.BankAccountService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,10 +13,11 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@CrossOrigin("*")
+
 public class CustomerRestController {
     private BankAccountService bankAccountService;
     @GetMapping("/customers")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public List<CustomerDTO> customers(){
         return bankAccountService.listCustomers();
     }
